@@ -1,229 +1,256 @@
 import React, { useState, useEffect } from 'react';
+import { MapContainer, TileLayer, Circle, Popup } from 'react-leaflet';
+import 'leaflet/dist/leaflet.css';
 import './App.css';
 
-function App() {
-  // --- ESTADOS GLOBAIS DE ALTA PERFORMANCE ---
-  const [activeTab, setActiveTab] = useState('mapa'); // Começando pelo mapa que é o foco agora
-  const [selectedZone, setSelectedZone] = useState(null);
-  const [mapMode, setMapMode] = useState('rain'); // 'rain' (Azul/Rota) ou 'risk' (Laranja/Heatmap) baseado no mockup
-  const [showSafeRoute, setShowSafeRoute] = useState(true);
-  const [alertFilter, setAlertFilter] = useState('todos');
+// ==========================================
+// COMPONENTE: TELA DE AUTENTICAÇÃO (RF001 / RF002)
+// ==========================================
+function AuthScreen({ onLogin }) {
+  const [isLogin, setIsLogin] = useState(true);
+  const [formData, setFormData] = useState({ nome: '', email: '', senha: '', tipo: 'usuario' });
+  const [erro, setErro] = useState('');
 
-  // --- DADOS DE TELEMETRIA COMPLEXOS ---
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (!formData.email || !formData.senha || (!isLogin && !formData.nome)) {
+      setErro('Preencha todos os campos obrigatórios.'); return;
+    }
+
+    if (isLogin) {
+      // Simulação de verificação no Banco de Dados
+      const savedUsers = JSON.parse(localStorage.getItem('floody_users')) || [
+        { nome: 'Admin Floody', email: 'admin@floody.com', senha: '123', tipo: 'admin' } // Admin padrão criado
+      ];
+      const user = savedUsers.find(u => u.email === formData.email && u.senha === formData.senha);
+      
+      if (user) {
+        localStorage.setItem('floody_active_session', JSON.stringify(user));
+        onLogin(user);
+      } else {
+        setErro('E-mail ou senha incorretos.');
+      }
+    } else {
+      // Simulação de Cadastro (RF001)
+      const savedUsers = JSON.parse(localStorage.getItem('floody_users')) || [
+        { nome: 'Admin Floody', email: 'admin@floody.com', senha: '123', tipo: 'admin' }
+      ];
+      const newUser = { id: Date.now(), nome: formData.nome, email: formData.email, senha: formData.senha, tipo: 'usuario' };
+      savedUsers.push(newUser);
+      localStorage.setItem('floody_users', JSON.stringify(savedUsers));
+      localStorage.setItem('floody_active_session', JSON.stringify(newUser));
+      onLogin(newUser);
+    }
+  };
+
+  return (
+    <div className="auth-wrapper">
+      <div className="auth-card">
+        <div className="auth-logo">
+          <div className="logo-mark">F<span className="drop">💧</span></div>
+          <h2>Floody</h2>
+        </div>
+        <p className="auth-subtitle">{isLogin ? 'Faça login para continuar' : 'Cadastre-se na plataforma'}</p>
+        {erro && <div className="auth-erro">{erro}</div>}
+
+        <form onSubmit={handleSubmit} className="auth-form">
+          {!isLogin && (
+            <div className="input-group">
+              <label>Nome Completo</label>
+              <input type="text" placeholder="Ex: Yuri José" value={formData.nome} onChange={e => setFormData({...formData, nome: e.target.value})} />
+            </div>
+          )}
+          <div className="input-group">
+            <label>E-mail</label>
+            <input type="email" placeholder="seuemail@exemplo.com" value={formData.email} onChange={e => setFormData({...formData, email: e.target.value})} />
+          </div>
+          <div className="input-group">
+            <label>Senha</label>
+            <input type="password" placeholder="••••••••" value={formData.senha} onChange={e => setFormData({...formData, senha: e.target.value})} />
+          </div>
+          <button type="submit" className="btn-primary auth-btn">{isLogin ? 'Entrar' : 'Cadastrar'}</button>
+        </form>
+        <div className="auth-switch">
+          <span>{isLogin ? 'Não tem conta?' : 'Já possui conta?'}</span>
+          <button type="button" onClick={() => { setIsLogin(!isLogin); setErro(''); }}>
+            {isLogin ? 'Criar agora' : 'Fazer login'}
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ==========================================
+// COMPONENTE PRINCIPAL: APP INTERNO
+// ==========================================
+function MainApp({ user, onLogout }) {
+  // Estado de navegação inicial
+  const [activeTab, setActiveTab] = useState(user.tipo === 'admin' ? 'admin_dashboard' : 'mapa');
+  
+  // Estados de Dados (Simulando o Firebase Firestore)
+  const [veiculos, setVeiculos] = useState(JSON.parse(localStorage.getItem('floody_veiculos')) || []);
+  const [reportes, setReportes] = useState(JSON.parse(localStorage.getItem('floody_reportes')) || []);
+  
+  // Formulários Locais
+  const [formVeiculo, setFormVeiculo] = useState({ modelo: '', marca: '', ano: '', tipo: 'Carro', altura: '' });
+  const [formReporte, setFormReporte] = useState({ tipo: 'Alagamento', descricao: '', local: 'Capturando GPS...' });
+
+  const recifeCenter = [-8.05428, -34.8813];
   const [zones, setZones] = useState([
-    { id: 'z1', nome: "Bacia do Capibaribe", status: "Crítico", nivel: 2.15, chuva: "45mm/h", temp: "28°C", coords: { top: '30%', left: '40%' } },
-    { id: 'z2', nome: "Av. Boa Viagem", status: "Atenção", nivel: 1.10, chuva: "15mm/h", temp: "27°C", coords: { top: '65%', left: '60%' } },
-    { id: 'z3', nome: "Centro Histórico", status: "Crítico", nivel: 1.80, chuva: "30mm/h", temp: "29°C", coords: { top: '45%', left: '45%' } },
-    { id: 'z4', nome: "Zona Norte (Arruda)", status: "Estável", nivel: 0.40, chuva: "5mm/h", temp: "26°C", coords: { top: '20%', left: '55%' } }
+    { id: 'z1', nome: "Av. Agamenon Magalhães", status: "Crítico", nivel: 1.80, coords: [-8.0470, -34.8770], raio: 600, cor: '#ef4444' },
+    { id: 'z2', nome: "Av. Domingos Ferreira", status: "Atenção", nivel: 0.90, coords: [-8.1130, -34.8940], raio: 500, cor: '#f59e0b' }
   ]);
 
-  const [liveMetrics, setLiveMetrics] = useState({
-    globalRain: 24.5,
-    activeSensors: 142,
-    incidents: 8
-  });
+  // --- FUNÇÕES DE VEÍCULO (RF005) ---
+  const handleSaveVeiculo = (e) => {
+    e.preventDefault();
+    const novoVeiculo = { ...formVeiculo, id: Date.now(), userId: user.email };
+    const novaLista = [...veiculos, novoVeiculo];
+    setVeiculos(novaLista);
+    localStorage.setItem('floody_veiculos', JSON.stringify(novaLista));
+    alert('Veículo salvo com sucesso! O Floody agora calculará rotas baseadas na altura do seu veículo.');
+    setFormVeiculo({ modelo: '', marca: '', ano: '', tipo: 'Carro', altura: '' });
+  };
 
-  // Alertas inspirados nos cards inferiores do mockup
-  const alertsLog = [
-    { id: 101, tipo: 'critico', titulo: 'Alerta de Inundação Rápida', local: 'Bacia do Capibaribe', desc: 'Risco de transbordo nas próximas 2 horas. Rota de evacuação sul ativada.', icon: '🌊', tempo: 'Agora' },
-    { id: 102, tipo: 'aviso', titulo: 'Pista Escorregadia', local: 'Av. Agamenon Magalhães', desc: 'Acúmulo de água nas faixas centrais. Reduza a velocidade.', icon: '🚗', tempo: 'Há 15 min' },
-    { id: 103, tipo: 'critico', titulo: 'Temperatura Anômala', local: 'Ilha do Retiro', desc: 'Sensação térmica de 38°C combinada com alta umidade pré-chuva.', icon: '🌡️', tempo: 'Há 32 min' },
-    { id: 104, tipo: 'info', titulo: 'Drenagem Ativa', local: 'Boa Viagem', desc: 'Bombas de sucção operando em capacidade máxima.', icon: '✅', tempo: 'Há 1 hora' }
-  ];
+  // --- FUNÇÕES DE REPORTE DA COMUNIDADE (RF016) ---
+  const handleSaveReporte = (e) => {
+    e.preventDefault();
+    const novoReporte = { ...formReporte, id: Date.now(), autor: user.nome, status: 'Pendente', data: new Date().toLocaleDateString() };
+    const novaLista = [...reportes, novoReporte];
+    setReportes(novaLista);
+    localStorage.setItem('floody_reportes', JSON.stringify(novaLista));
+    alert('Ocorrência enviada para validação da equipe do Floody!');
+    setFormReporte({ tipo: 'Alagamento', descricao: '', local: 'Av. Caxangá, Recife (Simulado)' });
+  };
 
-  // --- MOTOR DE SIMULAÇÃO EM TEMPO REAL ---
-  useEffect(() => {
-    const engine = setInterval(() => {
-      setZones(prev => prev.map(z => {
-        const volatility = (Math.random() * 0.08 - 0.04);
-        const newLevel = Math.max(0.1, parseFloat((z.nivel + volatility).toFixed(2)));
-        let newStatus = "Estável";
-        
-        if (newLevel > 1.5) newStatus = "Crítico";
-        else if (newLevel > 0.8) newStatus = "Atenção";
+  // --- FUNÇÕES ADMINISTRATIVAS (RF023) ---
+  const aprovarReporte = (id) => {
+    const atualizado = reportes.map(r => r.id === id ? { ...r, status: 'Aprovado (Visível no Mapa)' } : r);
+    setReportes(atualizado);
+    localStorage.setItem('floody_reportes', JSON.stringify(atualizado));
+  };
 
-        return { ...z, nivel: newLevel, status: newStatus };
-      }));
-
-      setLiveMetrics(prev => ({
-        ...prev,
-        globalRain: Math.max(0, parseFloat((prev.globalRain + (Math.random() * 1 - 0.5)).toFixed(1)))
-      }));
-    }, 3000); // Atualiza a cada 3s para dar sensação de sistema vivo
-
-    return () => clearInterval(engine);
-  }, []);
+  const deletarReporte = (id) => {
+    const atualizado = reportes.filter(r => r.id !== id);
+    setReportes(atualizado);
+    localStorage.setItem('floody_reportes', JSON.stringify(atualizado));
+  };
 
   return (
     <div className="floody-pro-layout">
-      {/* SIDEBAR SUPERIOR/LATERAL */}
+      {/* ================= BARRA LATERAL (MENU) ================= */}
       <aside className="pro-sidebar">
         <div className="logo-container">
           <div className="logo-mark">F<span className="drop">💧</span></div>
-          <h2>Floody <span>Pro</span></h2>
+          <h2>Floody</h2>
         </div>
 
         <nav className="pro-nav">
-          <button className={`nav-item ${activeTab === 'dashboard' ? 'active' : ''}`} onClick={() => setActiveTab('dashboard')}>
-            <span className="icon">📊</span> Visão Geral
-          </button>
-          <button className={`nav-item ${activeTab === 'mapa' ? 'active' : ''}`} onClick={() => setActiveTab('mapa')}>
-            <span className="icon">🗺️</span> Mapa Dinâmico
-          </button>
-          <button className={`nav-item ${activeTab === 'alertas' ? 'active' : ''}`} onClick={() => setActiveTab('alertas')}>
-            <span className="icon">⚠️</span> Central de Risco
-          </button>
+          {/* Menu para Usuário Comum */}
+          {user.tipo !== 'admin' && (
+            <>
+              <button className={`nav-item ${activeTab === 'mapa' ? 'active' : ''}`} onClick={() => setActiveTab('mapa')}>🗺️ Mapa de Risco</button>
+              <button className={`nav-item ${activeTab === 'alertas' ? 'active' : ''}`} onClick={() => setActiveTab('alertas')}>🚨 Alertas Oficiais</button>
+              <button className={`nav-item ${activeTab === 'veiculos' ? 'active' : ''}`} onClick={() => setActiveTab('veiculos')}>🚗 Meus Veículos</button>
+              <button className={`nav-item ${activeTab === 'reportar' ? 'active' : ''}`} onClick={() => setActiveTab('reportar')}>📸 Reportar Problema</button>
+              <button className={`nav-item ${activeTab === 'perfil' ? 'active' : ''}`} onClick={() => setActiveTab('perfil')}>👤 Meu Perfil</button>
+            </>
+          )}
+
+          {/* Menu para Administrador (RF022 / RF023) */}
+          {user.tipo === 'admin' && (
+            <>
+              <div className="admin-badge">Área Restrita</div>
+              <button className={`nav-item ${activeTab === 'admin_dashboard' ? 'active' : ''}`} onClick={() => setActiveTab('admin_dashboard')}>📊 Visão Geral</button>
+              <button className={`nav-item ${activeTab === 'admin_reportes' ? 'active' : ''}`} onClick={() => setActiveTab('admin_reportes')}>✅ Validar Ocorrências</button>
+              <button className={`nav-item ${activeTab === 'admin_usuarios' ? 'active' : ''}`} onClick={() => setActiveTab('admin_usuarios')}>👥 Gestão de Usuários</button>
+            </>
+          )}
         </nav>
 
-        <div className="system-health">
-          <div className="health-indicator pulse-green"></div>
-          <span>Rede Neural Online</span>
+        <div className="user-profile">
+          <div className="user-info">
+            <strong>{user.nome}</strong>
+            <span>{user.tipo === 'admin' ? 'Administrador' : 'Usuário Comum'}</span>
+          </div>
+          <button onClick={onLogout} className="logout-btn" title="Sair">🚪</button>
         </div>
       </aside>
 
-      {/* ÁREA DE RENDERIZAÇÃO PRINCIPAL */}
+      {/* ================= ÁREA DE CONTEÚDO ================= */}
       <main className="pro-workspace">
-        <header className="workspace-header">
-          <div className="header-titles">
-            <h1>Monitoramento de Mobilidade e Clima</h1>
-            <p>Recife, PE • Inteligência Artificial Ativa</p>
-          </div>
-          <div className="live-pill">🔴 LIVE FEED</div>
-        </header>
-
-        {/* --- TELA 1: DASHBOARD --- */}
-        {activeTab === 'dashboard' && (
-          <div className="fade-in">
-            <div className="bento-grid">
-              <div className="bento-card kpi-card blue">
-                <span className="kpi-label">Volume Pluviométrico</span>
-                <div className="kpi-value">{liveMetrics.globalRain} <small>mm/h</small></div>
-                <div className="kpi-chart-mockup rain-chart"></div>
-              </div>
-              
-              <div className="bento-card kpi-card orange">
-                <span className="kpi-label">Sensores IoT Desdobrados</span>
-                <div className="kpi-value">{liveMetrics.activeSensors} <small>Ativos</small></div>
-                <div className="kpi-chart-mockup pulse-chart"></div>
-              </div>
-
-              <div className="bento-card kpi-card red">
-                <span className="kpi-label">Zonas Críticas de Risco</span>
-                <div className="kpi-value">{zones.filter(z => z.status === 'Crítico').length} <small>Locais</small></div>
-                <div className="kpi-chart-mockup danger-chart"></div>
-              </div>
-            </div>
-
-            <div className="zones-data-table">
-              <h3>Status Detalhado das Bacias</h3>
-              <div className="table-header">
-                <span>Localização</span>
-                <span>Nível d'Água</span>
-                <span>Chuva</span>
-                <span>Temperatura</span>
-                <span>Status</span>
-              </div>
-              {zones.map(z => (
-                <div key={z.id} className="table-row">
-                  <strong>{z.nome}</strong>
-                  <span>{z.nivel}m</span>
-                  <span>{z.chuva}</span>
-                  <span>{z.temp}</span>
-                  <span className={`status-tag ${z.status === 'Crítico' ? 'tag-red' : z.status === 'Atenção' ? 'tag-yellow' : 'tag-green'}`}>
-                    {z.status}
-                  </span>
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
-
-        {/* --- TELA 2: MAPA DINÂMICO (Baseado nos Mockups) --- */}
+        
+        {/* --- TELA: MAPA DE RISCO (RF007) --- */}
         {activeTab === 'mapa' && (
-          <div className="fade-in map-fullscreen-container">
-            {/* Controles Flutuantes do Mapa */}
-            <div className="map-controls-glass">
-              <div className="mode-toggle">
-                <button className={`toggle-btn ${mapMode === 'rain' ? 'active-rain' : ''}`} onClick={() => setMapMode('rain')}>🌧️ Rain Mode</button>
-                <button className={`toggle-btn ${mapMode === 'risk' ? 'active-risk' : ''}`} onClick={() => setMapMode('risk')}>🔥 Risk Mode</button>
-              </div>
-              <label className="route-toggle">
-                <input type="checkbox" checked={showSafeRoute} onChange={(e) => setShowSafeRoute(e.target.checked)} />
-                🛣️ Rota Segura Ativa
-              </label>
+          <div className="fade-in fullscreen-tab">
+            <header className="content-header">
+              <h1>Mapa Inteligente de Mobilidade</h1>
+              <p>Evite áreas alagadas baseadas na altura do seu veículo.</p>
+            </header>
+            <div className="map-container-box">
+              <MapContainer center={recifeCenter} zoom={13} style={{ height: '100%', width: '100%' }}>
+                <TileLayer url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png" />
+                {zones.map(z => (
+                  <Circle key={z.id} center={z.coords} radius={z.raio} pathOptions={{ color: z.cor, fillColor: z.cor, fillOpacity: 0.5 }}>
+                    <Popup><div style={{ color: '#000' }}><strong>{z.nome}</strong><br/>Status: {z.status}<br/>Nível d'água: {z.nivel}m</div></Popup>
+                  </Circle>
+                ))}
+              </MapContainer>
             </div>
-
-            {/* O CANVAS DO MAPA */}
-            <div className={`pro-map-canvas mode-${mapMode}`}>
-              {/* Textura de fundo estilo mapa topográfico */}
-              <div className="topo-texture"></div>
-
-              {/* Camada de Heatmap (Muda dependendo do modo) */}
-              <div className={`heatmap-layer ${mapMode}`}></div>
-
-              {/* Rota Segura em SVG (Como no print da esquerda) */}
-              {showSafeRoute && mapMode === 'rain' && (
-                <svg className="safe-route-svg" viewBox="0 0 100 100" preserveAspectRatio="none">
-                  <path d="M 60 80 Q 40 50 45 30 T 55 10" fill="transparent" stroke="#10b981" strokeWidth="1.5" strokeLinecap="round" className="route-path" />
-                  <circle cx="60" cy="80" r="2" fill="#10b981" className="route-node" />
-                  <circle cx="55" cy="10" r="2" fill="#10b981" className="route-node" />
-                </svg>
-              )}
-
-              {/* Sensores espalhados pelo mapa */}
-              {zones.map(z => (
-                <div key={z.id} className={`map-pin ${z.status}`} style={{ top: z.coords.top, left: z.coords.left }} onClick={() => setSelectedZone(z)}>
-                  <div className="pin-ring"></div>
-                  <div className="pin-core"></div>
-                  <div className="pin-label">{z.nivel}m</div>
-                </div>
-              ))}
-            </div>
-
-            {/* Card inferior flutuante se clicar em um sensor */}
-            {selectedZone && (
-              <div className="floating-bottom-card slide-up">
-                <div className="card-header">
-                  <h3>{selectedZone.nome}</h3>
-                  <button className="close-btn" onClick={() => setSelectedZone(null)}>✕</button>
-                </div>
-                <div className="card-body-grid">
-                  <div className="stat"><span>Risco</span><strong className={selectedZone.status}>{selectedZone.status}</strong></div>
-                  <div className="stat"><span>Água</span><strong>{selectedZone.nivel}m</strong></div>
-                  <div className="stat"><span>Chuva</span><strong>{selectedZone.chuva}</strong></div>
-                  <div className="stat"><span>Temp</span><strong>{selectedZone.temp}</strong></div>
-                </div>
-                {selectedZone.status === 'Crítico' && (
-                  <button className="evac-btn">Acionar Protocolo de Evacuação</button>
-                )}
-              </div>
-            )}
           </div>
         )}
 
-        {/* --- TELA 3: CENTRAL DE ALERTAS --- */}
-        {activeTab === 'alertas' && (
-          <div className="fade-in">
-            <div className="alerts-layout">
-              <div className="alerts-sidebar-filter">
-                <h3>Filtros de Eventos</h3>
-                <button className={`filter-chip ${alertFilter === 'todos' ? 'active' : ''}`} onClick={() => setAlertFilter('todos')}>🌐 Todos os Eventos</button>
-                <button className={`filter-chip danger ${alertFilter === 'critico' ? 'active' : ''}`} onClick={() => setAlertFilter('critico')}>🚨 Inundação / Risco Alto</button>
-                <button className={`filter-chip warning ${alertFilter === 'aviso' ? 'active' : ''}`} onClick={() => setAlertFilter('aviso')}>⚠️ Trânsito / Avisos</button>
-                <button className={`filter-chip info ${alertFilter === 'info' ? 'active' : ''}`} onClick={() => setAlertFilter('info')}>✅ Sistemas Normais</button>
-              </div>
+        {/* --- TELA: CADASTRO DE VEÍCULO (RF005) --- */}
+        {activeTab === 'veiculos' && (
+          <div className="fade-in scrollable-tab">
+            <header className="content-header">
+              <h1>Garagem Floody</h1>
+              <p>Cadastre os dados físicos do seu veículo para cálculos de rotas precisos.</p>
+            </header>
+            
+            <div className="form-card">
+              <h3>Adicionar Novo Veículo</h3>
+              <form onSubmit={handleSaveVeiculo} className="grid-form">
+                <div className="input-group">
+                  <label>Marca</label>
+                  <input type="text" placeholder="Ex: Honda" value={formVeiculo.marca} onChange={e => setFormVeiculo({...formVeiculo, marca: e.target.value})} required />
+                </div>
+                <div className="input-group">
+                  <label>Modelo</label>
+                  <input type="text" placeholder="Ex: Civic" value={formVeiculo.modelo} onChange={e => setFormVeiculo({...formVeiculo, modelo: e.target.value})} required />
+                </div>
+                <div className="input-group">
+                  <label>Ano</label>
+                  <input type="number" placeholder="Ex: 2020" value={formVeiculo.ano} onChange={e => setFormVeiculo({...formVeiculo, ano: e.target.value})} required />
+                </div>
+                <div className="input-group">
+                  <label>Tipo</label>
+                  <select value={formVeiculo.tipo} onChange={e => setFormVeiculo({...formVeiculo, tipo: e.target.value})}>
+                    <option>Carro</option>
+                    <option>Moto</option>
+                    <option>Caminhão</option>
+                  </select>
+                </div>
+                <div className="input-group full-width">
+                  <label>Altura livre do solo (em cm)</label>
+                  <input type="number" placeholder="Ex: 15" value={formVeiculo.altura} onChange={e => setFormVeiculo({...formVeiculo, altura: e.target.value})} required />
+                  <small>Isso ajuda a IA a saber se seu carro passa pelo alagamento.</small>
+                </div>
+                <button type="submit" className="btn-primary">Salvar Veículo</button>
+              </form>
+            </div>
 
-              <div className="alerts-feed-container">
-                {alertsLog.filter(a => alertFilter === 'todos' || a.tipo === alertFilter).map(alert => (
-                  <div key={alert.id} className={`pro-alert-card type-${alert.tipo}`}>
-                    <div className="alert-icon-box">{alert.icon}</div>
-                    <div className="alert-content">
-                      <div className="alert-top">
-                        <h4>{alert.titulo}</h4>
-                        <span className="alert-time">{alert.tempo}</span>
-                      </div>
-                      <span className="alert-location">📍 {alert.local}</span>
-                      <p className="alert-desc">{alert.desc}</p>
+            <div className="list-card mt-20">
+              <h3>Seus Veículos Registrados</h3>
+              <div className="items-list">
+                {veiculos.filter(v => v.userId === user.email).length === 0 ? <p>Nenhum veículo cadastrado ainda.</p> : null}
+                {veiculos.filter(v => v.userId === user.email).map(v => (
+                  <div key={v.id} className="item-row">
+                    <div className="item-icon">🚗</div>
+                    <div className="item-details">
+                      <strong>{v.marca} {v.modelo} ({v.ano})</strong>
+                      <span>Tipo: {v.tipo} | Altura: {v.altura}cm</span>
                     </div>
                   </div>
                 ))}
@@ -231,9 +258,100 @@ function App() {
             </div>
           </div>
         )}
+
+        {/* --- TELA: REPORTAR PROBLEMA (RF016 / RF017) --- */}
+        {activeTab === 'reportar' && (
+          <div className="fade-in scrollable-tab">
+            <header className="content-header">
+              <h1>Colaboração Comunitária</h1>
+              <p>Ajude outros motoristas reportando perigos nas vias.</p>
+            </header>
+
+            <div className="form-card">
+              <form onSubmit={handleSaveReporte} className="grid-form">
+                <div className="input-group full-width">
+                  <label>Tipo de Ocorrência</label>
+                  <select value={formReporte.tipo} onChange={e => setFormReporte({...formReporte, tipo: e.target.value})}>
+                    <option>Alagamento Intransitável</option>
+                    <option>Acúmulo de Água Leve</option>
+                    <option>Buraco Perigoso</option>
+                    <option>Via Interditada por Árvore</option>
+                  </select>
+                </div>
+                <div className="input-group full-width">
+                  <label>Localização Automática (GPS)</label>
+                  <input type="text" value={formReporte.local} disabled className="disabled-input" />
+                </div>
+                <div className="input-group full-width">
+                  <label>Descrição Adicional</label>
+                  <textarea placeholder="Ex: Água cobrindo o pneu de carros de passeio..." value={formReporte.descricao} onChange={e => setFormReporte({...formReporte, descricao: e.target.value})} required></textarea>
+                </div>
+                <div className="input-group full-width">
+                  <label>Anexar Foto da Via</label>
+                  <input type="file" accept="image/*" className="file-input" />
+                </div>
+                <button type="submit" className="btn-danger">Enviar Alerta de Emergência</button>
+              </form>
+            </div>
+          </div>
+        )}
+
+        {/* --- TELA: ADMIN - VALIDAR REPORTES (RF023) --- */}
+        {activeTab === 'admin_reportes' && (
+          <div className="fade-in scrollable-tab">
+            <header className="content-header">
+              <h1>Validação de Ocorrências (Modo Admin)</h1>
+              <p>Revise as informações da comunidade antes de exibi-las no mapa público.</p>
+            </header>
+
+            <div className="admin-table-container">
+              <table className="admin-table">
+                <thead>
+                  <tr>
+                    <th>Data</th>
+                    <th>Autor</th>
+                    <th>Tipo</th>
+                    <th>Descrição</th>
+                    <th>Status</th>
+                    <th>Ações</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {reportes.length === 0 && <tr><td colSpan="6" style={{textAlign:'center'}}>Nenhuma ocorrência pendente.</td></tr>}
+                  {reportes.map(r => (
+                    <tr key={r.id}>
+                      <td>{r.data}</td>
+                      <td>{r.autor}</td>
+                      <td><span className="badge-tipo">{r.tipo}</span></td>
+                      <td>{r.descricao}</td>
+                      <td><strong className={r.status === 'Pendente' ? 'text-warning' : 'text-safe'}>{r.status}</strong></td>
+                      <td>
+                        {r.status === 'Pendente' && <button onClick={() => aprovarReporte(r.id)} className="btn-icon check">✔️ Aprovar</button>}
+                        <button onClick={() => deletarReporte(r.id)} className="btn-icon delete">🗑️ Excluir</button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        )}
+
       </main>
     </div>
   );
 }
 
-export default App;
+// ==========================================
+// BOOTSTRAP DA APLICAÇÃO
+// ==========================================
+export default function App() {
+  const [user, setUser] = useState(null);
+  useEffect(() => {
+    const session = localStorage.getItem('floody_active_session');
+    if (session) setUser(JSON.parse(session));
+  }, []);
+  const handleLogout = () => { localStorage.removeItem('floody_active_session'); setUser(null); };
+
+  return <>{!user ? <AuthScreen onLogin={setUser} /> : <MainApp user={user} onLogout={handleLogout} />}</>;
+}
