@@ -1,8 +1,1 @@
-{
-  "name": "floody-root",
-  "version": "1.0.0",
-  "scripts": {
-    "start": "cd floody && npm start",
-    "install-all": "cd floody && npm install"
-  }
-}
+{"name": "floody-root","version": "1.0.0","scripts": {"start": "cd floody && npm start"}}
