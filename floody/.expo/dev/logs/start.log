@@ -1,0 +1,129 @@
+{"_e":"root:init","_t":1782819885878,"format":"v0-jsonl","version":"56.1.16"}
+{"_e":"env:mode","_t":1782819885878,"nodeEnv":"development","babelEnv":"development","mode":"development"}
+{"_e":"env:load","_t":1782819885880,"mode":"development","files":[],"env":{}}
+{"_e":"devserver:start","_t":1782819886097,"mode":"development","web":true,"baseUrl":"","asyncRoutes":false,"routerRoot":"../../../app","serverComponents":false,"serverActions":false,"serverRendering":false,"apiRoutes":false,"exporting":false}
+{"_e":"metro:config","_t":1782819886556,"serverRoot":"../../..","projectRoot":"../../..","exporting":false,"flags":{"autolinkingModuleResolution":false,"serverActions":false,"serverComponents":false,"reactCompiler":false,"optimizeGraph":false,"treeshaking":false,"logbox":false}}
+{"_e":"metro:server_log","_t":1782819892107,"level":"error","data":["An unknown error occurred while installing React Native DevTools. Details:\n\n/workspaces/Floody/floody/node_modules/expo/node_modules/@react-native/debugger-shell/bin/react-native-devtools: error while loading shared libraries: libatk-1.0.so.0: cannot open shared object file: No such file or directory\n"]}
+{"_e":"metro:instantiate","_t":1782819892420,"atlas":false,"workers":3,"host":"::","port":8081}
+{"_e":"metro:bundling:started","_t":1782819900445,"id":"1","platform":"web","environment":null,"entry":"node_modules/expo/AppEntry.js"}
+{"_e":"metro:bundling:progress","_t":1782819900446,"id":"1","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1782819900452,"id":"1","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1782819901422,"id":"1","progress":0.010000000000000002,"total":1,"current":1}
+{"_e":"metro:bundling:failed","_t":1782819901432,"id":"1","message":"Unable to resolve \"../../App\" from \"node_modules/expo/AppEntry.js\"\n  1 | import registerRootComponent from 'expo/src/launch/registerRootComponent';\n  2 |\n> 3 | import App from '../../App';\n    |                  ^\n  4 |\n  5 | registerRootComponent(App);\n  6 |","importStack":"\u001b[1mImport stack:\u001b[22m\n\u001b[90m\u001b[39m\n\u001b[90m\u001b[90m \u001b[39m\u001b[90mnode_modules/\u001b[1mexpo\u001b[22m/AppEntry.js\u001b[39m\n\u001b[90m\u001b[90m |\u001b[39m\u001b[90m \u001b[36mimport\u001b[39m\u001b[90m \u001b[32m\"../../App\"\u001b[39m\u001b[90m\u001b[39m\n\u001b[90m\u001b[39m\n\u001b[90m\u001b[90m \u001b[39m\u001b[90m\u001b[39m\n\u001b[90m\u001b[90m |\u001b[39m\u001b[90m \u001b[36mimport\u001b[39m\u001b[90m \u001b[32m\"./node_modules/\u001b[1mexpo\u001b[22m/AppEntry\"\u001b[39m\u001b[90m\u001b[39m\n","filename":null,"targetModuleName":"../../App","originModulePath":"node_modules/expo/AppEntry.js"}
+{"_e":"root:init","_t":1782820142456,"format":"v0-jsonl","version":"56.1.16"}
+{"_e":"env:mode","_t":1782820142457,"nodeEnv":"development","babelEnv":"development","mode":"development"}
+{"_e":"env:load","_t":1782820142459,"mode":"development","files":[],"env":{}}
+{"_e":"devserver:start","_t":1782820142662,"mode":"development","web":true,"baseUrl":"","asyncRoutes":false,"routerRoot":"../../../app","serverComponents":false,"serverActions":false,"serverRendering":false,"apiRoutes":false,"exporting":false}
+{"_e":"metro:config","_t":1782820142948,"serverRoot":"../../..","projectRoot":"../../..","exporting":false,"flags":{"autolinkingModuleResolution":false,"serverActions":false,"serverComponents":false,"reactCompiler":false,"optimizeGraph":false,"treeshaking":false,"logbox":false}}
+{"_e":"metro:server_log","_t":1782820143171,"level":"error","data":["An unknown error occurred while installing React Native DevTools. Details:\n\n/workspaces/Floody/floody/node_modules/expo/node_modules/@react-native/debugger-shell/bin/react-native-devtools: error while loading shared libraries: libatk-1.0.so.0: cannot open shared object file: No such file or directory\n"]}
+{"_e":"metro:instantiate","_t":1782820147346,"atlas":false,"workers":3,"host":"::","port":8081}
+{"_e":"metro:bundling:started","_t":1782820186338,"id":"1","platform":"web","environment":null,"entry":"node_modules/expo/AppEntry.js"}
+{"_e":"metro:bundling:progress","_t":1782820186338,"id":"1","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1782820186344,"id":"1","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1782820186733,"id":"1","progress":0.010000000000000002,"total":1,"current":1}
+{"_e":"metro:bundling:progress","_t":1782820186832,"id":"1","progress":0.4049586776859504,"total":11,"current":7}
+{"_e":"metro:bundling:progress","_t":1782820186935,"id":"1","progress":0.4049586776859504,"total":22,"current":13}
+{"_e":"metro:bundling:progress","_t":1782820187042,"id":"1","progress":0.42533081285444235,"total":23,"current":15}
+{"_e":"metro:bundling:progress","_t":1782820187143,"id":"1","progress":0.5036420395421437,"total":31,"current":22}
+{"_e":"metro:bundling:progress","_t":1782820187244,"id":"1","progress":0.5036420395421437,"total":42,"current":24}
+{"_e":"metro:bundling:progress","_t":1782820187346,"id":"1","progress":0.5036420395421437,"total":46,"current":31}
+{"_e":"metro:bundling:progress","_t":1782820187446,"id":"1","progress":0.5545495699411498,"total":47,"current":35}
+{"_e":"metro:bundling:progress","_t":1782820187551,"id":"1","progress":0.6462898885044214,"total":51,"current":41}
+{"_e":"metro:bundling:progress","_t":1782820187651,"id":"1","progress":0.7108804306036139,"total":51,"current":43}
+{"_e":"metro:bundling:progress","_t":1782820187756,"id":"1","progress":0.7108804306036139,"total":56,"current":47}
+{"_e":"metro:bundling:progress","_t":1782820187820,"id":"1","progress":0.7108804306036139,"total":56,"current":47}
+{"_e":"metro:bundling:progress","_t":1782820187859,"id":"1","progress":0.7108804306036139,"total":81,"current":55}
+{"_e":"metro:bundling:progress","_t":1782820187861,"id":"1","progress":0.7108804306036139,"total":81,"current":55}
+{"_e":"metro:bundling:progress","_t":1782820187861,"id":"1","progress":0.7108804306036139,"total":81,"current":55}
+{"_e":"metro:bundling:progress","_t":1782820187861,"id":"1","progress":0.7108804306036139,"total":81,"current":55}
+{"_e":"metro:bundling:progress","_t":1782820187956,"id":"1","progress":0.7108804306036139,"total":85,"current":64}
+{"_e":"metro:bundling:progress","_t":1782820188056,"id":"1","progress":0.9101598625974369,"total":87,"current":83}
+{"_e":"metro:bundling:progress","_t":1782820188157,"id":"1","progress":0.9101598625974369,"total":103,"current":95}
+{"_e":"metro:bundling:progress","_t":1782820188258,"id":"1","progress":0.9425959091337544,"total":103,"current":100}
+{"_e":"metro:bundling:progress","_t":1782820188357,"id":"1","progress":0.980676783862758,"total":103,"current":102}
+{"_e":"metro:bundling:progress","_t":1782820189121,"id":"1","progress":0.999,"total":103,"current":103}
+{"_e":"metro:bundling:failed","_t":1782820189124,"id":"1","message":"Unable to resolve \"react-native-web/dist/exports/AppRegistry\" from \"node_modules/expo/src/launch/AppRegistry.ts\"\n> 1 | export { AppRegistry as default } from 'react-native';\n  2 |","importStack":"\u001b[1mImport stack:\u001b[22m\n\u001b[90m\u001b[39m\n\u001b[90m\u001b[90m \u001b[39m\u001b[90mnode_modules/\u001b[1mexpo\u001b[22m/src/launch/AppRegistry.ts\u001b[39m\n\u001b[90m\u001b[90m |\u001b[39m\u001b[90m \u001b[36mimport\u001b[39m\u001b[90m \u001b[32m\"react-native-web/dist/exports/AppRegistry\"\u001b[39m\u001b[90m\u001b[39m\n\u001b[90m\u001b[39m\n\u001b[90m\u001b[90m \u001b[39m\u001b[90mnode_modules/\u001b[1mexpo\u001b[22m/src/launch/registerRootComponent.web.tsx\u001b[39m\n\u001b[90m\u001b[90m |\u001b[39m\u001b[90m \u001b[36mimport\u001b[39m\u001b[90m \u001b[32m\"./AppRegistry\"\u001b[39m\u001b[90m\u001b[39m\n\u001b[90m\u001b[39m\n\u001b[90m\u001b[90m \u001b[39m\u001b[90mnode_modules/\u001b[1mexpo\u001b[22m/AppEntry.js\u001b[39m\n\u001b[90m\u001b[90m |\u001b[39m\u001b[90m \u001b[36mimport\u001b[39m\u001b[90m \u001b[32m\"expo/src/launch/registerRootComponent\"\u001b[39m\u001b[90m\u001b[39m\n\u001b[90m\u001b[39m\n\u001b[90m\u001b[90m \u001b[39m\u001b[90m\u001b[39m\n\u001b[90m\u001b[90m |\u001b[39m\u001b[90m \u001b[36mimport\u001b[39m\u001b[90m \u001b[32m\"./node_modules/\u001b[1mexpo\u001b[22m/AppEntry\"\u001b[39m\u001b[90m\u001b[39m\n","filename":null,"targetModuleName":"react-native-web/dist/exports/AppRegistry","originModulePath":"node_modules/expo/src/launch/AppRegistry.ts"}
+{"_e":"metro:bundling:started","_t":1782820192754,"id":"2","platform":"web","environment":null,"entry":"node_modules/expo/AppEntry.js"}
+{"_e":"metro:bundling:progress","_t":1782820192754,"id":"2","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1782820192757,"id":"2","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:failed","_t":1782820192834,"id":"2","message":"Unable to resolve \"react-native-web/dist/exports/AppRegistry\" from \"node_modules/expo/src/launch/AppRegistry.ts\"\n> 1 | export { AppRegistry as default } from 'react-native';\n  2 |","importStack":"\u001b[1mImport stack:\u001b[22m\n\u001b[90m\u001b[39m\n\u001b[90m\u001b[90m \u001b[39m\u001b[90mnode_modules/\u001b[1mexpo\u001b[22m/src/launch/AppRegistry.ts\u001b[39m\n\u001b[90m\u001b[90m |\u001b[39m\u001b[90m \u001b[36mimport\u001b[39m\u001b[90m \u001b[32m\"react-native-web/dist/exports/AppRegistry\"\u001b[39m\u001b[90m\u001b[39m\n\u001b[90m\u001b[39m\n\u001b[90m\u001b[90m \u001b[39m\u001b[90mnode_modules/\u001b[1mexpo\u001b[22m/src/launch/registerRootComponent.web.tsx\u001b[39m\n\u001b[90m\u001b[90m |\u001b[39m\u001b[90m \u001b[36mimport\u001b[39m\u001b[90m \u001b[32m\"./AppRegistry\"\u001b[39m\u001b[90m\u001b[39m\n\u001b[90m\u001b[39m\n\u001b[90m\u001b[90m \u001b[39m\u001b[90mnode_modules/\u001b[1mexpo\u001b[22m/AppEntry.js\u001b[39m\n\u001b[90m\u001b[90m |\u001b[39m\u001b[90m \u001b[36mimport\u001b[39m\u001b[90m \u001b[32m\"expo/src/launch/registerRootComponent\"\u001b[39m\u001b[90m\u001b[39m\n\u001b[90m\u001b[39m\n\u001b[90m\u001b[90m \u001b[39m\u001b[90m\u001b[39m\n\u001b[90m\u001b[90m |\u001b[39m\u001b[90m \u001b[36mimport\u001b[39m\u001b[90m \u001b[32m\"./node_modules/\u001b[1mexpo\u001b[22m/AppEntry\"\u001b[39m\u001b[90m\u001b[39m\n","filename":null,"targetModuleName":"react-native-web/dist/exports/AppRegistry","originModulePath":"node_modules/expo/src/launch/AppRegistry.ts"}
+{"_e":"metro:bundling:started","_t":1782820195835,"id":"3","platform":"web","environment":null,"entry":"node_modules/expo/AppEntry.js"}
+{"_e":"metro:bundling:progress","_t":1782820195836,"id":"3","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1782820195837,"id":"3","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:failed","_t":1782820195912,"id":"3","message":"Unable to resolve \"react-native-web/dist/exports/AppRegistry\" from \"node_modules/expo/src/launch/AppRegistry.ts\"\n> 1 | export { AppRegistry as default } from 'react-native';\n  2 |","importStack":"\u001b[1mImport stack:\u001b[22m\n\u001b[90m\u001b[39m\n\u001b[90m\u001b[90m \u001b[39m\u001b[90mnode_modules/\u001b[1mexpo\u001b[22m/src/launch/AppRegistry.ts\u001b[39m\n\u001b[90m\u001b[90m |\u001b[39m\u001b[90m \u001b[36mimport\u001b[39m\u001b[90m \u001b[32m\"react-native-web/dist/exports/AppRegistry\"\u001b[39m\u001b[90m\u001b[39m\n\u001b[90m\u001b[39m\n\u001b[90m\u001b[90m \u001b[39m\u001b[90mnode_modules/\u001b[1mexpo\u001b[22m/src/launch/registerRootComponent.web.tsx\u001b[39m\n\u001b[90m\u001b[90m |\u001b[39m\u001b[90m \u001b[36mimport\u001b[39m\u001b[90m \u001b[32m\"./AppRegistry\"\u001b[39m\u001b[90m\u001b[39m\n\u001b[90m\u001b[39m\n\u001b[90m\u001b[90m \u001b[39m\u001b[90mnode_modules/\u001b[1mexpo\u001b[22m/AppEntry.js\u001b[39m\n\u001b[90m\u001b[90m |\u001b[39m\u001b[90m \u001b[36mimport\u001b[39m\u001b[90m \u001b[32m\"expo/src/launch/registerRootComponent\"\u001b[39m\u001b[90m\u001b[39m\n\u001b[90m\u001b[39m\n\u001b[90m\u001b[90m \u001b[39m\u001b[90m\u001b[39m\n\u001b[90m\u001b[90m |\u001b[39m\u001b[90m \u001b[36mimport\u001b[39m\u001b[90m \u001b[32m\"./node_modules/\u001b[1mexpo\u001b[22m/AppEntry\"\u001b[39m\u001b[90m\u001b[39m\n","filename":null,"targetModuleName":"react-native-web/dist/exports/AppRegistry","originModulePath":"node_modules/expo/src/launch/AppRegistry.ts"}
+{"_e":"metro:bundling:started","_t":1782820196901,"id":"4","platform":"web","environment":null,"entry":"node_modules/expo/AppEntry.js"}
+{"_e":"metro:bundling:progress","_t":1782820196901,"id":"4","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1782820196903,"id":"4","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:failed","_t":1782820196950,"id":"4","message":"Unable to resolve \"react-native-web/dist/exports/AppRegistry\" from \"node_modules/expo/src/launch/AppRegistry.ts\"\n> 1 | export { AppRegistry as default } from 'react-native';\n  2 |","importStack":"\u001b[1mImport stack:\u001b[22m\n\u001b[90m\u001b[39m\n\u001b[90m\u001b[90m \u001b[39m\u001b[90mnode_modules/\u001b[1mexpo\u001b[22m/src/launch/AppRegistry.ts\u001b[39m\n\u001b[90m\u001b[90m |\u001b[39m\u001b[90m \u001b[36mimport\u001b[39m\u001b[90m \u001b[32m\"react-native-web/dist/exports/AppRegistry\"\u001b[39m\u001b[90m\u001b[39m\n\u001b[90m\u001b[39m\n\u001b[90m\u001b[90m \u001b[39m\u001b[90mnode_modules/\u001b[1mexpo\u001b[22m/src/launch/registerRootComponent.web.tsx\u001b[39m\n\u001b[90m\u001b[90m |\u001b[39m\u001b[90m \u001b[36mimport\u001b[39m\u001b[90m \u001b[32m\"./AppRegistry\"\u001b[39m\u001b[90m\u001b[39m\n\u001b[90m\u001b[39m\n\u001b[90m\u001b[90m \u001b[39m\u001b[90mnode_modules/\u001b[1mexpo\u001b[22m/AppEntry.js\u001b[39m\n\u001b[90m\u001b[90m |\u001b[39m\u001b[90m \u001b[36mimport\u001b[39m\u001b[90m \u001b[32m\"expo/src/launch/registerRootComponent\"\u001b[39m\u001b[90m\u001b[39m\n\u001b[90m\u001b[39m\n\u001b[90m\u001b[90m \u001b[39m\u001b[90m\u001b[39m\n\u001b[90m\u001b[90m |\u001b[39m\u001b[90m \u001b[36mimport\u001b[39m\u001b[90m \u001b[32m\"./node_modules/\u001b[1mexpo\u001b[22m/AppEntry\"\u001b[39m\u001b[90m\u001b[39m\n","filename":null,"targetModuleName":"react-native-web/dist/exports/AppRegistry","originModulePath":"node_modules/expo/src/launch/AppRegistry.ts"}
+{"_e":"root:init","_t":1782820363448,"format":"v0-jsonl","version":"56.1.16"}
+{"_e":"env:mode","_t":1782820363448,"nodeEnv":"development","babelEnv":"development","mode":"development"}
+{"_e":"env:load","_t":1782820363451,"mode":"development","files":[],"env":{}}
+{"_e":"devserver:start","_t":1782820363627,"mode":"development","web":true,"baseUrl":"","asyncRoutes":false,"routerRoot":"../../../app","serverComponents":false,"serverActions":false,"serverRendering":false,"apiRoutes":false,"exporting":false}
+{"_e":"metro:config","_t":1782820363960,"serverRoot":"../../..","projectRoot":"../../..","exporting":false,"flags":{"autolinkingModuleResolution":false,"serverActions":false,"serverComponents":false,"reactCompiler":false,"optimizeGraph":false,"treeshaking":false,"logbox":false}}
+{"_e":"metro:server_log","_t":1782820364184,"level":"error","data":["An unknown error occurred while installing React Native DevTools. Details:\n\n/workspaces/Floody/floody/node_modules/expo/node_modules/@react-native/debugger-shell/bin/react-native-devtools: error while loading shared libraries: libatk-1.0.so.0: cannot open shared object file: No such file or directory\n"]}
+{"_e":"metro:instantiate","_t":1782820368447,"atlas":false,"workers":3,"host":"::","port":8081}
+{"_e":"metro:bundling:started","_t":1782820407566,"id":"1","platform":"web","environment":null,"entry":"node_modules/expo/AppEntry.js"}
+{"_e":"metro:bundling:progress","_t":1782820407566,"id":"1","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1782820407570,"id":"1","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1782820407670,"id":"1","progress":0.8195013850415513,"total":95,"current":86}
+{"_e":"metro:bundling:progress","_t":1782820407771,"id":"1","progress":0.9619082840236686,"total":104,"current":102}
+{"_e":"metro:bundling:progress","_t":1782820408138,"id":"1","progress":0.9808616863905326,"total":104,"current":103}
+{"_e":"metro:bundling:progress","_t":1782820408238,"id":"1","progress":0.9808616863905326,"total":113,"current":107}
+{"_e":"metro:bundling:progress","_t":1782820408339,"id":"1","progress":0.9808616863905326,"total":120,"current":114}
+{"_e":"metro:bundling:progress","_t":1782820408441,"id":"1","progress":0.9808616863905326,"total":128,"current":118}
+{"_e":"metro:bundling:progress","_t":1782820408583,"id":"1","progress":0.9808616863905326,"total":128,"current":119}
+{"_e":"metro:bundling:progress","_t":1782820408684,"id":"1","progress":0.9808616863905326,"total":134,"current":120}
+{"_e":"metro:bundling:progress","_t":1782820408789,"id":"1","progress":0.9808616863905326,"total":137,"current":126}
+{"_e":"metro:bundling:progress","_t":1782820408892,"id":"1","progress":0.9808616863905326,"total":146,"current":137}
+{"_e":"metro:bundling:progress","_t":1782820408993,"id":"1","progress":0.9808616863905326,"total":157,"current":143}
+{"_e":"metro:bundling:progress","_t":1782820409092,"id":"1","progress":0.9808616863905326,"total":160,"current":154}
+{"_e":"metro:bundling:progress","_t":1782820409199,"id":"1","progress":0.9808616863905326,"total":174,"current":163}
+{"_e":"metro:bundling:progress","_t":1782820409297,"id":"1","progress":0.988538776588717,"total":174,"current":173}
+{"_e":"metro:bundling:progress","_t":1782820410276,"id":"1","progress":0.999,"total":174,"current":174}
+{"_e":"metro:bundling:progress","_t":1782820410377,"id":"1","progress":0.999,"total":176,"current":176}
+{"_e":"metro:bundling:done","_t":1782820410484,"id":"1","total":176,"ms":2918.303899}
+{"_e":"metro:client_log","_t":1782820419284,"level":"error","data":["[Error: Incompatible React versions: The \"react\" and \"react-dom\" packages must have the exact same version. Instead got:\n  - react:      19.2.7\n  - react-dom:  19.2.3\nLearn more: https://react.dev/warnings/version-mismatch]","\n\n\u001b[1mCode: react-dom-client.development.js\u001b[22m\n\u001b[0m \u001b[90m 27933 |\u001b[39m       \u001b[36mvar\u001b[39m isomorphicReactPackageVersion \u001b[33m=\u001b[39m \u001b[33mReact\u001b[39m\u001b[33m.\u001b[39mversion\u001b[33m;\u001b[39m\n \u001b[90m 27934 |\u001b[39m       \u001b[36mif\u001b[39m (\u001b[32m\"19.2.3\"\u001b[39m \u001b[33m!==\u001b[39m isomorphicReactPackageVersion)\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 27935 |\u001b[39m         \u001b[36mthrow\u001b[39m \u001b[33mError\u001b[39m(\n \u001b[90m       |\u001b[39m               \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 27936 |\u001b[39m           \u001b[32m'Incompatible React versions: The \"react\" and \"react-dom\" packages must have the exact same version. Instead got:\\n  - react:      '\u001b[39m \u001b[33m+\u001b[39m\n \u001b[90m 27937 |\u001b[39m             (isomorphicReactPackageVersion \u001b[33m+\u001b[39m\n \u001b[90m 27938 |\u001b[39m               \u001b[32m\"\\n  - react-dom:  19.2.3\\nLearn more: https://react.dev/warnings/version-mismatch\"\u001b[39m)\u001b[0m\n\u001b[1mCall Stack\u001b[22m\n\u001b[2m\u001b[90m  <anonymous> (\u001b]8;;node_modules/react-dom/cjs/react-dom-client.development.js:27935:15\u0007node_modules/react-dom/cjs/react-dom-client.development.js:27935:15\u001b]8;;\u0007)\u001b[39m\u001b[22m\n\u001b[2m\u001b[90m  <anonymous> (\u001b]8;;node_modules/react-dom/cjs/react-dom-client.development.js:27940:6\u0007node_modules/react-dom/cjs/react-dom-client.development.js:27940:6\u001b]8;;\u0007)\u001b[39m\u001b[22m\n\u001b[2m\u001b[90m  <global> (\u001b]8;;node_modules/react-dom/cjs/react-dom-client.development.js:28121:4\u0007node_modules/react-dom/cjs/react-dom-client.development.js:28121:4\u001b]8;;\u0007)\u001b[39m\u001b[22m\n\u001b[2m\u001b[90m  <global> (\u001b]8;;node_modules/react-dom/client.js:37:20\u0007node_modules/react-dom/client.js:37:20\u001b]8;;\u0007)\u001b[39m\u001b[22m"]}
+{"_e":"root:init","_t":1782820714630,"format":"v0-jsonl","version":"56.1.16"}
+{"_e":"env:mode","_t":1782820714630,"nodeEnv":"development","babelEnv":"development","mode":"development"}
+{"_e":"env:load","_t":1782820714632,"mode":"development","files":[],"env":{}}
+{"_e":"devserver:start","_t":1782820714834,"mode":"development","web":true,"baseUrl":"","asyncRoutes":false,"routerRoot":"../../../app","serverComponents":false,"serverActions":false,"serverRendering":false,"apiRoutes":false,"exporting":false}
+{"_e":"metro:config","_t":1782820715224,"serverRoot":"../../..","projectRoot":"../../..","exporting":false,"flags":{"autolinkingModuleResolution":false,"serverActions":false,"serverComponents":false,"reactCompiler":false,"optimizeGraph":false,"treeshaking":false,"logbox":false}}
+{"_e":"metro:server_log","_t":1782820715448,"level":"error","data":["An unknown error occurred while installing React Native DevTools. Details:\n\n/workspaces/Floody/floody/node_modules/expo/node_modules/@react-native/debugger-shell/bin/react-native-devtools: error while loading shared libraries: libatk-1.0.so.0: cannot open shared object file: No such file or directory\n"]}
+{"_e":"metro:instantiate","_t":1782820719741,"atlas":false,"workers":3,"host":"::","port":8081}
+{"_e":"metro:bundling:started","_t":1782820725730,"id":"1","platform":"web","environment":null,"entry":"node_modules/expo/AppEntry.js"}
+{"_e":"metro:bundling:progress","_t":1782820725731,"id":"1","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1782820725735,"id":"1","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1782820726161,"id":"1","progress":0.010000000000000002,"total":1,"current":1}
+{"_e":"metro:bundling:progress","_t":1782820726261,"id":"1","progress":0.09,"total":9,"current":3}
+{"_e":"metro:bundling:progress","_t":1782820726380,"id":"1","progress":0.25,"total":16,"current":8}
+{"_e":"metro:bundling:progress","_t":1782820726493,"id":"1","progress":0.3832199546485261,"total":21,"current":13}
+{"_e":"metro:bundling:progress","_t":1782820726842,"id":"1","progress":0.4444444444444444,"total":21,"current":14}
+{"_e":"metro:bundling:progress","_t":1782820726942,"id":"1","progress":0.5184,"total":25,"current":18}
+{"_e":"metro:bundling:progress","_t":1782820727046,"id":"1","progress":0.6782006920415224,"total":34,"current":28}
+{"_e":"metro:bundling:progress","_t":1782820727163,"id":"1","progress":0.6782006920415224,"total":40,"current":31}
+{"_e":"metro:bundling:progress","_t":1782820727263,"id":"1","progress":0.6782006920415224,"total":49,"current":40}
+{"_e":"metro:bundling:progress","_t":1782820727379,"id":"1","progress":0.6799015081563559,"total":57,"current":47}
+{"_e":"metro:bundling:progress","_t":1782820727469,"id":"1","progress":0.6799015081563559,"total":99,"current":53}
+{"_e":"metro:bundling:progress","_t":1782820727472,"id":"1","progress":0.6799015081563559,"total":99,"current":53}
+{"_e":"metro:bundling:progress","_t":1782820727485,"id":"1","progress":0.6799015081563559,"total":99,"current":53}
+{"_e":"metro:bundling:progress","_t":1782820727485,"id":"1","progress":0.6799015081563559,"total":99,"current":53}
+{"_e":"metro:bundling:progress","_t":1782820727485,"id":"1","progress":0.6799015081563559,"total":99,"current":53}
+{"_e":"metro:bundling:progress","_t":1782820727612,"id":"1","progress":0.6799015081563559,"total":102,"current":58}
+{"_e":"metro:bundling:progress","_t":1782820727713,"id":"1","progress":0.6799015081563559,"total":107,"current":69}
+{"_e":"metro:bundling:progress","_t":1782820727817,"id":"1","progress":0.6799015081563559,"total":111,"current":77}
+{"_e":"metro:bundling:progress","_t":1782820727918,"id":"1","progress":0.7137336504161713,"total":116,"current":98}
+{"_e":"metro:bundling:progress","_t":1782820728018,"id":"1","progress":0.7137336504161713,"total":142,"current":109}
+{"_e":"metro:bundling:progress","_t":1782820728126,"id":"1","progress":0.7137336504161713,"total":145,"current":115}
+{"_e":"metro:bundling:progress","_t":1782820728226,"id":"1","progress":0.7137336504161713,"total":147,"current":121}
+{"_e":"metro:bundling:progress","_t":1782820728326,"id":"1","progress":0.7346938775510203,"total":147,"current":126}
+{"_e":"metro:bundling:progress","_t":1782820728431,"id":"1","progress":0.8685732796519969,"total":147,"current":137}
+{"_e":"metro:bundling:progress","_t":1782820728533,"id":"1","progress":0.8685732796519969,"total":157,"current":142}
+{"_e":"metro:bundling:progress","_t":1782820728640,"id":"1","progress":0.9025,"total":160,"current":152}
+{"_e":"metro:bundling:progress","_t":1782820728740,"id":"1","progress":0.9025,"total":174,"current":159}
+{"_e":"metro:bundling:progress","_t":1782820728841,"id":"1","progress":0.977143612101995,"total":174,"current":172}
+{"_e":"metro:bundling:progress","_t":1782820729447,"id":"1","progress":0.988538776588717,"total":174,"current":173}
+{"_e":"metro:bundling:progress","_t":1782820730021,"id":"1","progress":0.999,"total":174,"current":174}
+{"_e":"metro:bundling:progress","_t":1782820730121,"id":"1","progress":0.999,"total":176,"current":176}
+{"_e":"metro:bundling:done","_t":1782820730202,"id":"1","total":176,"ms":4471.266198}
+{"_e":"metro:client_log","_t":1782820731720,"level":"info","data":["%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools","font-weight:bold"]}
+{"_e":"metro:client_log","_t":1782820731721,"level":"log","data":["Running application \"main\" with appParams:\n","{\"hydrate\": undefined, \"rootTag\": \"#root\"}","\nDevelopment-level warnings: ON.\nPerformance optimizations: OFF."]}
